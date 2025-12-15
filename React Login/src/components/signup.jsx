@@ -1,35 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function Signup() {
-    const [Username, setUsername] = useState("");
-    const [Email, setEmail] = useState("");
-    const [Password, setPassword] = useState("");
-    const [Message, setMessage] = useState("");
+    let [Username, setUsername] = useState("");
+    let [Email, setEmail] = useState("");
+    let [Password, setPassword] = useState("");
+    let [Message, setMessage] = useState("");
+
+    useEffect(() => {
+        if (Message) {
+            const timer = setTimeout(() => {
+                setMessage("");
+            }, 3000);
+            return () => clearTimeout(timer); 
+        }
+    }, [Message]);
 
     function handleSubmit(e) {
         e.preventDefault();
         
-        // Pehle sab fields check karo
         if (Username === "" || Email === "" || Password === "") {
             setMessage("Please fill in all fields");
             return;
         }
         
-        // Phir password length check
         if (Password.length < 6) {
             setMessage("Password must be at least 6 characters long");
             return;
         }
         
-        // Agar sab theek, success aur localStorage mein save karo
         setMessage("Signup Successful!");
         
-        // localStorage mein save karo
         localStorage.setItem("Username", JSON.stringify(Username));
         localStorage.setItem("Email", JSON.stringify(Email));
         localStorage.setItem("Password", JSON.stringify(Password));
         
-        // Form reset karo (optional)
         setUsername("");
         setEmail("");
         setPassword("");
