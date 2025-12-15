@@ -1,33 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Signin() {
-    const [Email, setEmail] = useState("");
-    const [Password, setPassword] = useState("");
-    const [Message, setMessage] = useState("");
+    let [Email, setEmail] = useState("");
+    let [Password, setPassword] = useState("");
+    let [Message, setMessage] = useState("");
+
+    useEffect(() => {
+        if (Message) {
+            let timer = setTimeout(() => {
+                setMessage("");
+            }, 3000);
+            return () => clearTimeout(timer); 
+        }
+    }, [Message]);
 
     function handleSubmit(e) {
         e.preventDefault();
         
-        // Pehle sab fields check karo
         if (Email === "" || Password === "") {
             setMessage("Please fill in all fields");
             return;
         }
         
-        // localStorage se stored data lao
-        const storedEmail = JSON.parse(localStorage.getItem("Email"));
-        const storedPassword = JSON.parse(localStorage.getItem("Password"));
+        let storedEmail = JSON.parse(localStorage.getItem("Email"));
+        let storedPassword = JSON.parse(localStorage.getItem("Password"));
         
-        // Check karo ke user signup kiya hai ya nahi
         if (!storedEmail || !storedPassword) {
             setMessage("No user found. Please sign up first.");
             return;
         }
         
-        // Email aur password match karo
         if (Email === storedEmail && Password === storedPassword) {
             setMessage("Login Successful!");
-            // Form reset karo (optional)
             setEmail("");
             setPassword("");
         } else {
