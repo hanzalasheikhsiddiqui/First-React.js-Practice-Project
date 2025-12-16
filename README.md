@@ -25,9 +25,9 @@ my-react-assignment/
 ├── package.json
 └── README.md
 
-Author
+<b>Author<b/>
 
 Hanzala Siddiqui
 React Developer | Beginner Portfolio Project  
 
-live Demo <a></a>
+
